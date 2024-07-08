@@ -7,10 +7,10 @@ node {
         checkout scm
     }
 
-    stage('Build image') {
+    // stage('Build image') {
   
-       app = docker.build("brandonjones085/test")
-    }
+    //    app = docker.build("tsega1907/mytestrepo")
+    // }
 
     stage('Test image') {
   
@@ -20,11 +20,11 @@ node {
         }
     }
 
-    stage('Push image') {
+    // stage('Push image') {
         
-        docker.withRegistry('https://registry.hub.docker.com', 'git') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
-        }
-    }
+    //     docker.withRegistry('https://registry.hub.docker.com', 'git') {
+    //         app.push("${env.BUILD_NUMBER}")
+    //         app.push("latest")
+    //     }
+    // }
 }
