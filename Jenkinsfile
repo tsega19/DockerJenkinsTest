@@ -7,15 +7,17 @@ pipeline {
                 git url: 'https://github.com/tsega19/DockerJenkinsTest.git', branch: 'main'
             }
         }
+        
+        stage('Build image') { // New Stage to build image
+            steps {
+                sh 'docker build -t my-test-image .' // Replace '.' with path to Dockerfile if needed
+            }
+        }
        
         stage('Test image') {
             steps {
                 script {
-                    // def myImage = docker.image('my-image:latest')
-                    myImage.inside {
-                        sh 'echo "Running tests inside Docker container"'
-                        // Add your test commands here
-                    }
+                    sh 'docker run my-test-image echo "Running tests inside Docker container"' // Replace with your test commands
                 }
             }
         }
