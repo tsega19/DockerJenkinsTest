@@ -1,30 +1,23 @@
-node {
-    def app
+pipeline {
+    agent any
 
-    stage('Clone repository') {
-      
-
-        checkout scm
-    }
-
-    // stage('Build image') {
-  
-    //    app = docker.build("tsega1907/mytestrepo")
-    // }
-
-    stage('Test image') {
-  
-
-        app.inside {
-            sh 'echo "Tests passed"'
+    stages {
+        stage('Clone repository') {
+            steps {
+                git url: 'https://github.com/tsega19/DockerJenkinsTest.git', branch: 'main'
+            }
+        }
+       
+        stage('Test image') {
+            steps {
+                script {
+                    def myImage = docker.image('my-image:latest')
+                    myImage.inside {
+                        sh 'echo "Running tests inside Docker container"'
+                        // Add your test commands here
+                    }
+                }
+            }
         }
     }
-
-    // stage('Push image') {
-        
-    //     docker.withRegistry('https://registry.hub.docker.com', 'git') {
-    //         app.push("${env.BUILD_NUMBER}")
-    //         app.push("latest")
-    //     }
-    // }
 }
