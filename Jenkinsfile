@@ -1,6 +1,5 @@
 pipeline {
-    agent any
-
+    
     stages {
         stage('Clone repository') {
             steps {
@@ -11,7 +10,6 @@ pipeline {
         stage('Test image') {
             steps {
                 script {
-                    def myImage = docker.image('my-image:latest')
                     myImage.inside {
                         sh 'echo "Running tests inside Docker container"'
                         // Add your test commands here
