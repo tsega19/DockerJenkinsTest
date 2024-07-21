@@ -2,22 +2,31 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone repository') {
+        stage('Checkout') {
             steps {
-                git url: 'https://github.com/tsega19/DockerJenkinsTest.git', branch: 'main'
+                git 'https://github.com/your-repo.git'
             }
         }
-        
-        stage('Build image') { 
+        stage('Build') {
             steps {
-                sh 'docker build -t my-test-image .' 
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
-       
+        stage('Build image') {
+            steps {
+                script {
+                    // Ensure Docker is configured correctly
+                    def dockerImage = docker.build('my-test-image')
+                }
+            }
+        }
         stage('Test image') {
             steps {
                 script {
-                    echo 'docker run my-test-image echo "Running tests inside Docker container"' // Replace with your test commands
+                    docker.image('my-test-image').inside {
+                        sh 'npm test'
+                    }
                 }
             }
         }
