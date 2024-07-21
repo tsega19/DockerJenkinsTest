@@ -23,9 +23,10 @@ pipeline {
         stage('Test image') {
             steps {
                 script {
-                    docker.image('my-test-image').inside {
+                    // docker.image('my-test-image').inside {
                         sh 'echo "Running tests..."'
-                    }
+                    
+                    // }
                 }
             }
         }
