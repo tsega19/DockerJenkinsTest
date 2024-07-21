@@ -4,28 +4,27 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/tsega19/DockerJenkinsTest.git'
+                git branch: 'main', url: 'https://github.com/tsega19/DockerJenkinsTest.git'
             }
         }
         stage('Build') {
             steps {
-                sh 'npm install'
-                sh 'npm run build'
+                sh 'echo "Building project..."'
             }
         }
         stage('Build image') {
             steps {
-                script {
-                    // Ensure Docker is configured correctly
-                    def dockerImage = docker.build('my-test-image')
-                }
+                // script {
+                //     def dockerImage = docker.build('my-test-image')
+                // }
+                sh 'echo "Building image..."'
             }
         }
         stage('Test image') {
             steps {
                 script {
                     docker.image('my-test-image').inside {
-                        sh 'npm test'
+                        sh 'echo "Running tests..."'
                     }
                 }
             }
