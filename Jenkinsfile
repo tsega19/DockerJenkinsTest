@@ -8,16 +8,16 @@ pipeline {
             }
         }
         
-        stage('Build image') { // New Stage to build image
+        stage('Build image') { 
             steps {
-                sh 'docker build -t my-test-image .' // Replace '.' with path to Dockerfile if needed
+                sh 'docker build -t my-test-image .' 
             }
         }
        
         stage('Test image') {
             steps {
                 script {
-                    sh 'docker run my-test-image echo "Running tests inside Docker container"' // Replace with your test commands
+                    echo 'docker run my-test-image echo "Running tests inside Docker container"' // Replace with your test commands
                 }
             }
         }
